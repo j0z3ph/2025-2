@@ -7,7 +7,7 @@
       ],
       "compilerPath": "/usr/bin/clang",
       "cStandard": "${default}",
-      "cppStandard": "${default}",
+      "cpp Standard": "${default}",
       "intelliSenseMode": "macos-clang-x64",
       "compilerArgs": [
         ""
