@@ -11,7 +11,8 @@ class C:
         print("Clase C")
         
 class D(C,B,A):
-    pass
+    def metodo(self):
+        print("Clase D")
 
 instancia = D()
 instancia.metodo()
