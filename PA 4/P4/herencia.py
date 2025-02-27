@@ -12,10 +12,10 @@ class C:
     def metodo(self):
         print("C")
     
-class D:
+class D(A,B,C):
     
     @multimethod
-    def imprime(self, mensaje):
+    def imprime(self, mensaje:str): #Es necesario especificar el tipo de dato de los parametros
         print(mensaje)
         
     @multimethod
@@ -24,4 +24,4 @@ class D:
 
 instancia = D()
 
-instancia.imprime("j")
+instancia.imprime()
