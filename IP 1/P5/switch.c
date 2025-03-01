@@ -14,40 +14,50 @@ int main()
 {
     int seleccion;
 
-    printf("Menu\n");
-    printf("  1. Minions\n");
-    printf("  2. Adolescentes\n");
-    printf("  3. Adultos Jovenes\n");
-    printf("  4. Adultos\n");
-    printf("  5. Adultos Mayores\n");
-    printf("Seleccione su grupo de edad: ");
-    scanf("%i", &seleccion);
+    for(;;)
+    {
+        printf("Menu\n");
+        printf("  1. Minions\n");
+        printf("  2. Adolescentes\n");
+        printf("  3. Adultos Jovenes\n");
+        printf("  4. Adultos\n");
+        printf("  5. Adultos Mayores\n");
+        printf("  6. Salir\n");
+        printf("Seleccione su grupo de edad: ");
+        scanf("%i", &seleccion);
 
-    switch (seleccion)
-    {
-    case 1:
-    {
-        char cadena[50] = "Compra terrenos. Invierte en bitcoins";
-        printf("%s\n", cadena);
-    }
-    break;
-    case 2:
-        printf("Estudia y no pistees\n");
-        printf("Estudia y no pistees\n");
-        printf("Estudia y no pistees\n");
+        switch (seleccion)
+        {
+        case 1:
+        {
+            char cadena[50] = "Compra terrenos. Invierte en bitcoins";
+            printf("%s\n", cadena);
+        }
         break;
-    case 3:
-        printf("Aprende a sumar\n");
-        break;
-    case 4:
-        printf("No esta demas un examen de prostata c:\n");
-        break;
-    case 5:
-        printf("Firmale aqui\n");
-        break;
-    default:
-        printf("Aprende a leer tonoto >:c\n");
-        // break;
+        case 2:
+            printf("Estudia y no pistees\n");
+            printf("Estudia y no pistees\n");
+            printf("Estudia y no pistees\n");
+            break;
+        case 3:
+            printf("Aprende a sumar\n");
+            break;
+        case 4:
+            printf("No esta demas un examen de prostata c:\n");
+            break;
+        case 5:
+            printf("Firmale aqui\n");
+            break;
+        case 6:
+            printf("Huele a gas\n");
+            break;
+        default:
+            printf("Aprende a leer tonoto >:c\n");
+            // break;
+        }
+        while(getchar() != '\n');
+        getchar();
+        if(seleccion == 6) break;
     }
 
     return 0;
