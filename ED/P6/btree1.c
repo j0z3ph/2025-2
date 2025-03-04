@@ -39,6 +39,7 @@ BTree *newBTree()
     tree->size = 0;
     tree->__last = 0;
     tree->insert = insert;
+    tree->freeBTree = freeBTree;
     return tree;
 }
 
