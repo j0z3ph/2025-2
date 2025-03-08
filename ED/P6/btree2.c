@@ -28,7 +28,7 @@ typedef struct BTree
     void (*insert)(struct BTree **self, size_t value);
     // void (*freeBTree)(struct BTree **self);
     // bool (*delete)(struct BTree **self, size_t value);
-    void (*removing)(struct BTree **tree, size_t value);
+    void (*removing)(struct BTree **self, size_t value);
 } BTree;
 
 typedef struct Queue
@@ -61,7 +61,8 @@ void insertQueue(Queue **queue, Node *ptr)
 {
     if ((*queue)->head == NULL)
     {
-        (*queue)->head = malloc(sizeof(Node *));
+        //(*queue)->head = malloc(sizeof(Node *)); // aqui estaba el error
+        (*queue)->head = malloc(sizeof(Node *) * MIN_SIZE_QUEUE);
         (*queue)->head[0] = ptr;
         (*queue)->size = 1;
     }
@@ -212,7 +213,7 @@ void removing(BTree **tree, size_t value)
                 }
                 free(queue->head[queue->size - 1]);
             }
-
+            (*tree)->size--;
             queue->freeQueue(&queue);
         }
     }
