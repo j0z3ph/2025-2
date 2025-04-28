@@ -12,7 +12,8 @@
 
 int main()
 {
-    char arreglo[4] = {65,66,67,68};
+    char arreglo[] = {65,66,67,68};
+    
     int entero = 10;
 
     //arreglo[0] = 65;
