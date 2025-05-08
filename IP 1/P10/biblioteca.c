@@ -9,9 +9,9 @@
  * 
  */
 
-// Definiciones
+// Definiciones  
 int suma(int a, int b) {
-    int res = a + b;
+    int res = a - b;
     return res;
 }
 

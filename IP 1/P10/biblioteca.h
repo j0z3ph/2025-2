@@ -2,7 +2,7 @@
 #define __BIBLIOTECA_H__
 
 
-// Declaracion
+// Declaracion  make
 
 /// @brief Suma dos numeros enteros
 /// @param a El primer entero
