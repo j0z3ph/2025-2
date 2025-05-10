@@ -9,27 +9,32 @@
  * 
  */
 #include<stdio.h>
+#include "biblioteca.h"
+#include "biblioteca.h"
 
-// Declaraciones
 
-int suma(int a, int b);
+// Declaracion
+int resta(int a, int b);
 
 
 int main()
 {
     int a = 5, b = 3;
     int resultado = suma(a, b);
+    resultado = resta(a, b);
 
     printf("%d\n", resultado);
+
+    printf("%d\n", multiplica(a,b));
 
     
     return 0;
 }
 
-
 // Definicion
-
-int suma(int a, int b) {
-    int res = a + b;
+int resta(int a, int b) {
+    int res;
+    res = a - b;
     return res;
 }
+
