@@ -10,11 +10,9 @@
  */
 #include<iostream>
 
-using namespace std;
-
 int main()
 {
-    cout << "Holi Canoli" << endl;
-    
+    //std::cout << "Holi Canoli" << std::endl;
+    printf("Holi Canoli\n");
     return 0;
 }
