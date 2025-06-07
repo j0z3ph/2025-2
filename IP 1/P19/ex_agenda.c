@@ -32,13 +32,24 @@ typedef struct ListaContactos
 {
     Contacto *lista;
     size_t tamanio;
+    void (*agregar)(struct ListaContactos **self, Contacto contacto);
+    void (*eliminar)(struct ListaContactos **self);
+    void (*listar)(struct ListaContactos **lista);
 } ListaContactos;
+
+
+void agregarContacto(ListaContactos **lista, Contacto contacto);
+void eliminarContacto(ListaContactos **lista);
+void listarContactos(ListaContactos **lista);
 
 ListaContactos *creaNuevaLista()
 {
     ListaContactos *l = malloc(sizeof(ListaContactos));
     l->lista = NULL;
     l->tamanio = 0;
+    l->agregar = agregarContacto;
+    l->eliminar = eliminarContacto;
+    l->listar = listarContactos;
     return l;
 }
 
@@ -52,7 +63,6 @@ void imprimeContacto(Contacto *c)
     printf("Fecha de nacimiento: %02i-%02i-%04i\n",
            c->fNacimiento.dia, c->fNacimiento.mes,
            c->fNacimiento.anio);
-    
 }
 
 void agregarContacto(ListaContactos **lista, Contacto contacto)
@@ -72,7 +82,51 @@ void agregarContacto(ListaContactos **lista, Contacto contacto)
     }
 }
 
-void quitaEnters(char *cadena) {
+void eliminarContacto(ListaContactos **lista)
+{
+    if ((*lista)->lista != NULL)
+    {
+        char *lcontacto[(*lista)->tamanio];
+        for (size_t i = 0; i < (*lista)->tamanio; i++)
+        {
+            lcontacto[i] = malloc(sizeof(char) * 200);
+            sprintf(lcontacto[i], "%s (%s)", (*lista)->lista[i].nombre, (*lista)->lista[i].correo);
+        }
+
+        int idEliminar = showMenu((*lista)->tamanio, lcontacto, "Seleccione el contacto a eliminar");
+
+        if ((*lista)->tamanio == 1)
+        {
+            free((*lista)->lista);
+            (*lista)->lista = NULL;
+            (*lista)->tamanio = 0;
+        }
+        else
+        {
+            memcpy((*lista)->lista + idEliminar, (*lista)->lista + idEliminar + 1,
+                   ((*lista)->tamanio - idEliminar - 1) * sizeof(Contacto));
+            (*lista)->lista = realloc((*lista)->lista, ((*lista)->tamanio - 1) * sizeof(Contacto));
+            (*lista)->tamanio--;
+        }
+
+        for (size_t i = 0; i < (*lista)->tamanio; i++)
+        {
+            free(lcontacto[i]);
+        }
+    }
+}
+
+void listarContactos(ListaContactos **lista)
+{
+    for (size_t i = 0; i < (*lista)->tamanio; i++)
+    {
+        imprimeContacto(&(*lista)->lista[i]);
+        printf("\n");
+    }
+}
+
+void quitaEnters(char *cadena)
+{
     cadena[strlen(cadena) - 1] = '\0';
 }
 
@@ -104,22 +158,14 @@ int main()
                   &tmp.fNacimiento.mes,
                   &tmp.fNacimiento.anio);
 
-            agregarContacto(&lista, tmp);
+            lista->agregar(&lista, tmp);
             break;
         case 1:
-            // Eliminar
+            lista->eliminar(&lista);
             break;
         case 2:
-            for (size_t i = 0; i < lista->tamanio; i++)
-            {
-                imprimeContacto(&lista->lista[i]);
-                printf("\n");
-            }
+            lista->listar(&lista);
             break;
-        case 3:
-            // Salir
-            break;
-
         default:
             break;
         }
