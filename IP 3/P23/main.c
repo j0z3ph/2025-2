@@ -9,16 +9,30 @@
  * 
  */
 #include"graficos.h"
+#include"simplecontroller.h"
+
 #define GRAVEDAD 1
 
-int main()
+#define JX 14
+#define JY 27
+#define BTN 26
+
+int main() 
 {
     int tecla;
-    int x, y;
+    int x=0, y=10;
     bool ti = false, td = false;
+    float jx, jy;
+    bool btn;
+
     int aceleracion = 0;
     int rx = 100, ry = 100, rw = 50, rh = 50;
-    Imagen *imagen = ventana.creaImagen("imagen.bmp");
+    Imagen *imagen = ventana.creaImagenConMascara("imagen.bmp", "imagenM.bmp");
+    Board *control = connectDevice("COM7", B115200);
+
+    control->pinMode(control, JX, INPUT);
+    control->pinMode(control, JY, INPUT);
+    control->pinMode(control, BTN, INPUT_PULLUP);
 
     rw = ventana.anchoImagen(imagen);
     rh = ventana.altoImagen(imagen);
@@ -33,6 +47,47 @@ int main()
 
     while( tecla != TECLAS.ESCAPE) {
         tecla = ventana.teclaPresionada();
+
+        x++;
+
+        jx = control->analogRead(control, JX);
+        jy = control->analogRead(control, JY);
+        btn = control->digitalRead(control, BTN);
+
+        float ajusteX = 0.7f;
+        float ajusteY = 0.7f;
+
+        float maxX = 1.0f - ajusteX;
+        float maxY = 1.0f - ajusteY;
+        
+        int tx, ty;
+        
+
+        jx -= ajusteX;
+        
+        jy -= ajusteY;
+
+        if(jx >= 0) {
+            tx = (int)((jx * 10.0f)/ maxX);
+        } else {
+            tx = (int)((jx * 10.0f) / ajusteX);
+        }
+
+        if(jy >= 0) {
+            ty = (int)((jy * 10.0f)/ maxY);
+        } else {
+            ty = (int)((jy * 10.0f) / ajusteY);
+        }
+
+        //x += tx;
+        //y += ty;
+        rx += tx;
+        if(!btn) {
+            aceleracion = -20;
+        }
+
+        ventana.imprimeEnConsola("%f, %f, %i, %i, %i\n", jx, jy, btn, tx, ty);
+
         
         aceleracion += GRAVEDAD;
         ry += aceleracion;
@@ -59,7 +114,7 @@ int main()
         if(rx + rw >= ventana.anchoVentana()) rx = ventana.anchoVentana() - rw;
 
 
-        ventana.raton(&x, &y);
+        //ventana.raton(&x, &y);
         //ventana.color(COLORES.NEGRO);
 
 
